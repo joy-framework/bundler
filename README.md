@@ -14,7 +14,7 @@ Add to your `project.janet` file
 
 ## Use
 
-Assuming you have some `*.js` and `*.css` files in a `public/` folder your root project folder (the one with `project.janet` in it), run this:
+Assuming you have some `*.js` and `*.css` files in a `public/` folder, from your root project folder (the one with `project.janet` in it), run this:
 
 ```clojure
 (import bundler)
