@@ -7,10 +7,13 @@
 
 
 (defn- read-file [filename]
-  (let [f (file/open filename :r)
-        contents (file/read f :all)]
-    (file/close f)
-    contents))
+  (with [f (file/open filename :r)]
+    (file/read f :all)))
+
+
+(defn- write-file [filename contents]
+  (with [f (file/open filename :w)]
+    (file/write f contents)))
 
 
 (defn- clean [folder]
@@ -31,8 +34,8 @@
                        (string/join ? "\n"))
         hash1 (hash contents)
         bundle-name (string "bundle" hash1 ext)]
-    (with [f (file/open (path/join folder bundle-name) :w)]
-      (file/write f contents))
+    (write-file (path/join folder bundle-name)
+                contents)
     bundle-name))
 
 
@@ -45,6 +48,7 @@
                        (map |(path/join folder $)))
         js-files (->> (filter js? files)
                       (map |(path/join folder $)))]
+
     (unless (empty? css-files)
       (bundle-files folder css-files ".css"))
 
